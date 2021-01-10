@@ -12,6 +12,8 @@ from firelab.utils.training_utils import LinearScheme
 from firelab.config import Config
 from PIL import Image
 
+from template_lib.utils import get_filelist_recursive
+
 
 class ProgressiveTransform:
     """
@@ -78,7 +80,8 @@ class PlainImageDataset(VisionDataset):
 
         self.root = root
         self.transform = transform
-        self.imgs_paths = [os.path.join(self.root, p) for p in os.listdir(self.root)]
+        # self.imgs_paths = [os.path.join(self.root, p) for p in os.listdir(self.root)]
+        self.imgs_paths = get_filelist_recursive(self.root, ext='*.png')
         self.dummy_class = 0 # TODO: it is a dirty hack so we do not change API compared to LSUN :(
 
     def __len__(self):
